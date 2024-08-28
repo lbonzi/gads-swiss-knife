@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "GAds Swiss Knife",
+  "description": "Easily Dismiss Automatically All Recommendations in Your GAds Account. Language Supported: English, Italian, Portuguese, Spanish, German, French, Dutch.",
+  "version": "1.1",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://ads.google.com/aw/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://ads.google.com/aw/*"],
+      "js": ["dismiss_recommendations.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon128.png"
+  },
+  "web_accessible_resources": [{
+    "resources": ["fireworks.gif", "audio.mp3"],
+    "matches": ["https://*/*"]
+  }],
+  "author": "Lorenzo Bonzi",
+  "homepage_url": "https://www.linkedin.com/in/lorenzo-bonzi/"
+}

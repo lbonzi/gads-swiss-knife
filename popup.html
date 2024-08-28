@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GAds Swiss Knife</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #232323;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            max-width: 400px;
+            min-width: 300px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            color: #d11317;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 1em;
+            color: white;
+            margin: 10px 0 20px;
+        }
+        h3 {
+            font-size: 0.8em;
+            color: white;
+            margin: 10px 0 20px;
+        }
+        #dismissRecommendationsButton {
+            background-color: #d11317;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px;
+        }
+        #dismissRecommendationsButton:hover {
+            background-color: #a00e12;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-size: 1em;
+            color: white;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        a {
+            color: #0a66c2;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            color: black;
+            border-radius: 10px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal-button {
+            background-color: #d11317;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px;
+        }
+        .modal-button:hover {
+            background-color: #a00e12;
+        }
+        #fireworks {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            pointer-events: none; /* Assicurati che non interferisca con i click dell'utente */
+        }
+    </style>
+</head>
+<body>
+    <div class="section">
+        <h1>GAds Swiss Knife</h1>
+        <h2>Automate the lovely task of dismissing all recommendations from your GAds account with just one click.</h2>
+        
+       <h3> Made with ❤️ by Lorenzo Bonzi - If you want updates or just want to share the love,
+        <a href="https://www.linkedin.com/in/lorenzo-bonzi/" target="_blank">follow me on LinkedIn🍀</a></h3>
+        
+    </div>
+    <div class="section">
+        <label for="languageSelect">Select Language:</label>
+        <select id="languageSelect">
+            <option value="en">English</option>
+            <option value="it">Italiano</option>
+            <option value="pt-pt">Português (PT)</option>
+            <option value="pt-br">Português (BR)</option>
+            <option value="es">Español</option>
+            <option value="de">Deutsch</option>
+            <option value="fr">Français</option>
+            <option value="nl">Nederlands</option>
+        </select>
+    </div>
+    <div class="section">
+        <button id="dismissRecommendationsButton">Dismiss All Recommendations</button>
+        <label><input type="checkbox" id="musicSwitch"> Enable FUN During Dismissal</label>
+        <h3> Ps: Give us back the old Design 🥲 </h3>
+    </div>
+    <div id="fireworks">
+        <img src="fireworks.gif" alt="Fireworks" style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>This Will Dismiss ALL Recommendations, Are You Sure?</p>
+            <button id="confirmDismiss" class="modal-button">YES</button>
+            <button id="cancelDismiss" class="modal-button">NO</button>
+        </div>
+    </div>
+    <audio id="backgroundMusic" loop>
+        <source src="audio.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <script src="popup.js"></script>
+</body>
+</html>
