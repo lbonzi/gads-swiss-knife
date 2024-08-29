@@ -1,23 +1,23 @@
 var dismissTranslations = {
-  "en": ["Dismiss all", "Dismiss"],
-  "it": ["Ignora tutto", "Ignora" , "Elimina"],
-  "pt-pt": ["Ignorar tudo", "Ignorar"],
-  "pt-br": ["Dispensar tudo", "Dispensar"],
-  "es": ["Rechazar todas", "Rechazar", "Cerrar"],
-  "de": ["Alle ablehnen", "Ablehnen"],
-  "fr": ["Tout supprimer", "Supprimer", "Ignorer"],
-  "nl": ["Alles sluiten", "Sluiten"]
+    "en": ["Dismiss all", "Dismiss"],
+    "it": ["Ignora tutto", "Ignora", "Elimina"],
+    "pt-pt": ["Ignorar tudo", "Ignorar"],
+    "pt-br": ["Dispensar tudo", "Dispensar"],
+    "es": ["Rechazar todas", "Rechazar", "Cerrar"],
+    "de": ["Alle ablehnen", "Ablehnen"],
+    "fr": ["Tout supprimer", "Supprimer", "Ignorer"],
+    "nl": ["Alles sluiten", "Sluiten"]
 };
 
 var menuTranslations = {
-  "en": ["Overflow menu"],
-  "it": ["Menu extra"],
-  "pt-pt": ["Menu adicional"],
-  "pt-br": ["Menu flutuante"],
-  "es": ["Menú adicional"],
-  "de": ["Dreipunkt-Menü"],
-  "fr": ["Menu à développer"],
-  "nl": ["Overloopmenu"]
+    "en": ["Overflow menu"],
+    "it": ["Menu extra"],
+    "pt-pt": ["Menu adicional"],
+    "pt-br": ["Menu flutuante"],
+    "es": ["Menú adicional"],
+    "de": ["Dreipunkt-Menü"],
+    "fr": ["Menu à développer"],
+    "nl": ["Overloopmenu"]
 };
 
 function playMusic() {
@@ -69,58 +69,58 @@ function showFireworks() {
 }
 
 function dismissAllRecommendations() {
-  console.log("Starting to dismiss all recommendations...");
+    console.log("Starting to dismiss all recommendations...");
 
-  function attemptDismissal() {
-    chrome.storage.local.get(['selectedLanguage', 'musicEnabled'], function(result) {
-      const language = result.selectedLanguage || 'en';
-      const dismissTextOptions = dismissTranslations[language] || dismissTranslations['en'];
-      const menuText = menuTranslations[language] || menuTranslations['en'];
+    function attemptDismissal() {
+        chrome.storage.local.get(['selectedLanguage', 'musicEnabled'], function(result) {
+            const language = result.selectedLanguage || 'en';
+            const dismissTextOptions = dismissTranslations[language] || dismissTranslations['en'];
+            const menuText = menuTranslations[language] || menuTranslations['en'];
 
-      const firstButton = Array.from(document.querySelectorAll("suggestion-card-menu material-button")).find(el => el.getAttribute('aria-label') && el.getAttribute('aria-label').includes(menuText));
-      if (firstButton) {
-        firstButton.click();
-        console.log("First 'Overflow menu' button clicked.");
+            const firstButton = Array.from(document.querySelectorAll("suggestion-card-menu material-button")).find(el => el.getAttribute('aria-label') && el.getAttribute('aria-label').includes(menuText));
+            if (firstButton) {
+                firstButton.click();
+                console.log("First 'Overflow menu' button clicked.");
 
-        setTimeout(() => {
-          const dismissAllButton = document.querySelector("material-list-item[debugid='dismiss-all-menu-item']");
-          if (dismissAllButton) {
-            dismissAllButton.click();
-            console.log("Dismiss All button clicked from dropdown.");
+                setTimeout(() => {
+                    const dismissAllButton = document.querySelector("material-list-item[debugid='dismiss-all-menu-item']");
+                    if (dismissAllButton) {
+                        dismissAllButton.click();
+                        console.log("Dismiss All button clicked from dropdown.");
 
-            setTimeout(() => {
-              const confirmDismissAllButton = Array.from(document.querySelectorAll("material-button.btn-yes")).find(el =>
-                dismissTextOptions.some(text => el.textContent.trim().includes(text))
-              );
-              if (confirmDismissAllButton) {
-                confirmDismissAllButton.click();
-                console.log("Confirmed Dismiss All or Dismiss button clicked.");
+                        setTimeout(() => {
+                            const confirmDismissAllButton = Array.from(document.querySelectorAll("material-button.btn-yes")).find(el =>
+                                dismissTextOptions.some(text => el.textContent.trim().includes(text))
+                            );
+                            if (confirmDismissAllButton) {
+                                confirmDismissAllButton.click();
+                                console.log("Confirmed Dismiss All or Dismiss button clicked.");
 
-                setTimeout(attemptDismissal, 1000);
-              } else {
-                console.log("Confirm Dismiss All or Dismiss button not found.");
+                                setTimeout(attemptDismissal, 1000);
+                            } else {
+                                console.log("Confirm Dismiss All or Dismiss button not found.");
+                                if (result.musicEnabled) {
+                                    showFireworks();
+                                    stopMusic();
+                                }
+                            }
+                        }, 1000);
+                    } else {
+                        console.log("Dismiss All button not found in dropdown.");
+                        setTimeout(attemptDismissal, 1000);
+                    }
+                }, 1000);
+            } else {
+                console.log("'Overflow menu' button not found. Stopping the process.");
                 if (result.musicEnabled) {
-                  showFireworks();
-                  stopMusic();
+                    showFireworks();
+                    stopMusic();
                 }
-              }
-            }, 1000);
-          } else {
-            console.log("Dismiss All button not found in dropdown.");
-            setTimeout(attemptDismissal, 1000);
-          }
-        }, 1000);
-      } else {
-        console.log("'Overflow menu' button not found. Stopping the process.");
-        if (result.musicEnabled) {
-          showFireworks();
-          stopMusic();
-        }
-      }
-    });
-  }
+            }
+        });
+    }
 
-  attemptDismissal();
+    attemptDismissal();
 }
 
 function addFloatingButton() {
@@ -139,14 +139,9 @@ function addFloatingButton() {
     floatingButton.style.cursor = 'pointer';
     floatingButton.style.fontSize = '1em';
     floatingButton.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';
-    floatingButton.style.display = 'none';  // Inizialmente nascosto
+    floatingButton.style.display = 'none'; // Inizialmente nascosto
 
     floatingButton.addEventListener('click', function() {
-        chrome.storage.local.get(['musicEnabled'], function(result) {
-            if (result.musicEnabled) {
-                playMusic();
-            }
-        });
         showConfirmationModal();
     });
 
@@ -170,7 +165,10 @@ function monitorPageChange() {
             lastUrl = currentUrl;
             toggleFloatingButton();
         }
-    }).observe(document, { subtree: true, childList: true });
+    }).observe(document, {
+        subtree: true,
+        childList: true
+    });
 }
 
 function showConfirmationModal() {
@@ -224,7 +222,7 @@ function showConfirmationModal() {
     confirmButton.addEventListener('click', function() {
         chrome.storage.local.get(['musicEnabled'], function(result) {
             if (result.musicEnabled) {
-                playMusic();
+                playMusic(); // Sposta la chiamata qui, così la musica parte solo dopo "YES"
             }
         });
         dismissAllRecommendations();
